@@ -1,0 +1,47 @@
+<?php
+// Inizializza le variabili per i messaggi
+$message = '';
+$error = '';
+
+// Controlla se il modulo è stato inviato
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+    // Estrai le credenziali
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    // Esempio di credenziali valide (sostituisci con la tua logica)
+    $valid_username = 'admin';
+    $valid_password = 'password123';
+
+    // Verifica le credenziali
+    if ($username === $valid_username && $password === $valid_password) {
+        $message = "Benvenuto, $username!";
+    } else {
+        $error = 'Credenziali errate, riprova.';
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+
+<h2>Login</h2>
+
+
+<!-- Form di login -->
+<form action="" method="GET">
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username" required><br><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+    <input type="submit" name="submit" value="Login">
+</form>
+
+</body>
+</html>
