@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Anagrafica Utenti</title>
+</head>
+<body>
+
+<h1>Modulo di Registrazione</h1>
+<form id="userForm">
+    <!-- Nome -->
+    <label for="nome">Nome (solo lettere):</label>
+    <input type="text" id="nome" name="nome" required>
+    <div class="error" id="nomeError">Il nome è obbligatorio e può contenere solo lettere.</div>
+
+    <!-- Cognome -->
+    <label for="cognome">Cognome (solo lettere e apostrofi):</label>
+    <input type="text" id="cognome" name="cognome" required>
+    <div class="error" id="cognomeError">Il cognome è obbligatorio e può contenere solo lettere e apostrofi.</div>
+
+    <!-- Data di nascita -->
+    <label for="data_nascita">Data di nascita:</label>
+    <input type="date" id="data_nascita" name="data_nascita" required>
+    <div class="error" id="dataNascitaError">La data di nascita è obbligatoria.</div>
+
+    <!-- Email -->
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <div class="error" id="emailError">L'email è obbligatoria e deve essere nel formato corretto.</div>
+
+    <!-- Cellulare (opzionale) -->
+    <label for="cellulare">Cellulare (12 cifre):</label>
+    <input type="text" id="cellulare" name="cellulare" pattern="^\d{12}$" title="Il numero deve avere 12 cifre.">
+    <div class="error" id="cellulareError">Il numero di cellulare deve avere 12 cifre.</div>
+
+    <!-- Indirizzo -->
+    <label for="indirizzo">Indirizzo:</label>
+    <input type="text" id="indirizzo" name="indirizzo" required>
+
+    <!-- Nickname -->
+    <label for="nickname">Nickname:</label>
+    <input type="text" id="nickname" name="nickname" required>
+    <div class="error" id="nicknameError">Il nickname deve essere diverso da nome e cognome.</div>
+
+    <!-- Password -->
+    <label for="password">Password (almeno 8 caratteri, una maiuscola, un numero, un simbolo):</label>
+    <input type="password" id="password" name="password" required>
+    <div class="error" id="passwordError">La password deve contenere almeno 8 caratteri, una lettera maiuscola, un numero e un simbolo.</div>
+
+    <!-- Bottone invio -->
+    <button type="submit">Invia</button>
+</form>
+
+<script>
+    // Funzione di validazione del modulo
+    document.getElementById('userForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Impedisce l'invio del form se non è valido
+
+        let isValid = true;
+
+        // Nome: deve essere solo lettere
+        const nome = document.getElementById('nome');
+        const nomeError = document.getElementById('nomeError');
+        if (!nome.value.match(/^[A-Za-z]+$/)) {
+            nomeError.style.display = 'block';
+            isValid = false;
+        } else {
+            nomeError.style.display = 'none';
+        }
+
+        // Cognome: deve essere solo lettere o apostrofi
+        const cognome = document.getElementById('cognome');
+        const cognomeError = document.getElementById('cognomeError');
+        if (!cognome.value.match(/^[A-Za-z']+$/)) {
+            cognomeError.style.display = 'block';
+            isValid = false;
+        } else {
+            cognomeError.style.display = 'none';
+        }
+
+        // Data di nascita: obbligatoria
+        const dataNascita = document.getElementById('data_nascita');
+        const dataNascitaError = document.getElementById('dataNascitaError');
+        if (!dataNascita.value) {
+            dataNascitaError.style.display = 'block';
+            isValid = false;
+        } else {
+            dataNascitaError.style.display = 'none';
+        }
+
+        // Email: deve essere nel formato corretto
+        const email = document.getElementById('email');
+        const emailError = document.getElementById('emailError');
+        if (!email.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+            emailError.style.display = 'block';
+            isValid = false;
+        } else {
+            emailError.style.display = 'none';
+        }
+
+        // Cellulare (opzionale): deve essere 12 cifre
+        const cellulare = document.getElementById('cellulare');
+        const cellulareError = document.getElementById('cellulareError');
+        if (cellulare.value && !cellulare.value.match(/^\d{12}$/)) {
+            cellulareError.style.display = 'block';
+            isValid = false;
+        } else {
+            cellulareError.style.display = 'none';
+        }
+
+        // Nickname: deve essere diverso da nome e cognome
+        const nickname = document.getElementById('nickname');
+        const nicknameError = document.getElementById('nicknameError');
+        if (nickname.value === nome.value || nickname.value === cognome.value) {
+            nicknameError.style.display = 'block';
+            isValid = false;
+        } else {
+            nicknameError.style.display = 'none';
+        }
+
+        // Password: almeno 8 caratteri, una maiuscola, un numero, un simbolo
+        const password = document.getElementById('password');
+        const passwordError = document.getElementById('passwordError');
+        if (!password.value.match(/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/)) {
+            passwordError.style.display = 'block';
+            isValid = false;
+        } else {
+            passwordError.style.display = 'none';
+        }
+
+        // Se il modulo è valido, mostriamo un messaggio
+        if (isValid) {
+            alert("Form inviato correttamente!");
+        }
+    });
+</script>
+
+</body>
+</html>
